@@ -7,32 +7,28 @@ import InputText from "./components/input-text";
 
 class Modal extends React.Component {
 
+  constructor(props) {
+    super(props)
+  }
+
   state = {
     a: "Miguel"
   }
 
   componentDidMount() {
-    setTimeout(() => {
-      this.setState({
-        a: 'Leo',
-        b: 'nidas'
-      })
-      
-    }, 5000)
   }
 
   componentWillUnmount() {
-    console.log('El componente esta por desaparecer')
-    debugger
+
   }
 
   render(){
     return (
-      <div>
-        {this.state.a}
-        {this.state.b}
-        Hola Mundo!!!
-      </div>
+      // <div>
+      //   {this.state.a}
+      //   {this.state.b}
+      //   Hola Mundo!!!
+      // </div>
     )
   }
 }
