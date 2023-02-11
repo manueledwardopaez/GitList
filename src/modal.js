@@ -2,35 +2,40 @@ import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Overlay from "./components/overlay";
 import styled from "styled-components";
-import {ButtonContrast} from "./components/button.js";
+import { ButtonContrast } from "./components/button.js";
 import InputText from "./components/input-text";
+import ReactDOM from "react-dom";
 
-class Modal extends React.Component {
+const modalRoot = document.getElementById("portal");
 
+class ModalPortal extends React.Component {
   constructor(props) {
-    super(props)
-  }
-
-  state = {
-    a: "Miguel"
+    super(props);
+    this.el = document.createElement("div");
   }
 
   componentDidMount() {
+    modalRoot.appendChild(this.el);
   }
 
   componentWillUnmount() {
-
+    modalRoot.removeChild(this.el);
   }
 
-  render(){
+  render() {
+    return ReactDOM.createPortal(this.props.children, this.el);
+  }
+}
+
+export default function Modal({ isActive, setModal }) {
+  if (isActive) {
     return (
-      // <div>
-      //   {this.state.a}
-      //   {this.state.b}
-      //   Hola Mundo!!!
-      // </div>
-    )
+      <ModalPortal>
+        <ModalContent setModal={setModal}/>
+      </ModalPortal>
+    );
   }
+  return null;
 }
 
 const ModalContentStyled = styled.form`
@@ -52,33 +57,31 @@ const ModalContentStyled = styled.form`
   }
 `;
 
-function ModalContent() {
+function ModalContent({setModal}) {
   const form = useRef(null);
   const navigator = useNavigate();
-  const [isActive, setIsActive] = useState(true)
-  /* console.log({ form }); */
 
   function handleSubmit(event) {
-    setIsActive(false)
     event.preventDefault();
 
     const formData = new FormData(form.current);
     navigator(`/${formData.get("username")}`);
+
+    setModal(false)
   }
 
   return (
     <Overlay>
-      {
-        isActive ? <Modal /> : null
-      }
       <ModalContentStyled ref={form} action="" onSubmit={handleSubmit}>
         <h2 className="title">Search any user</h2>
-        <InputText type="text" autoComplete="off" name="username" placeholder="Username" />
+        <InputText
+          type="text"
+          autoComplete="off"
+          name="username"
+          placeholder="Username"
+        />
         <ButtonContrast text="Search" />
-        <Modal></Modal>
       </ModalContentStyled>
     </Overlay>
   );
 }
-
-export default ModalContent;

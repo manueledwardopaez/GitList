@@ -5,6 +5,8 @@ import ArrowDown from "./arrow-down";
 import Cancel from "./cancel";
 import Check from "./check";
 import Star from "./star";
+import Search from "./search";
+import GitHub from "./github";
 
 function Index({ name, ...props }) {
   switch (name) {
@@ -28,6 +30,12 @@ function Index({ name, ...props }) {
     }
     case "star": {
       return <Star {...props} />;
+    }
+    case "search": {
+      return <Search {...props}/>
+    }
+    case "github": {
+      return <GitHub {...props}/>
     }
     default: {
       return null;

@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import ModalContent from '../modal'
 
 const FilterStyled = styled.div`
     grid-area: filters;
@@ -9,8 +8,7 @@ const FilterStyled = styled.div`
 function Filters() {
     return (
         <FilterStyled>
-            <ModalContent/>
-            Filter
+        Filter
         </FilterStyled>
     )
 }
